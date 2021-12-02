@@ -11,7 +11,7 @@ export async function fetchMonthly(selectedDate) {
     for (const year of years)
         urls.push(URL.replace("year", year).replace("month", selectedDate.getMonth() + 1));
 
-    let requests = urls.map(url => fetch(url));
+    let requests = urls.map(url => fetch(url, { samesite: 'lax' }));
     let responses = await Promise.all(requests);
 
     // Get all the jsons
@@ -23,20 +23,23 @@ export async function fetchMonthly(selectedDate) {
     return jsons;
 }
 
-export async function getTodayByYear(selectedDate, forceFetch, showLoader) {
+export async function getTodayByYear(selectedDate, forceFetch, showLoader, clearDoodles) {
+
     if (forceFetch) {
         showLoader(true);
+        clearDoodles();
         monthData = await fetchMonthly(selectedDate);
-        showLoader(false);
     } else {
         // Only fetch if the month is different
         if (previousMonth !== selectedDate.getMonth()) {
             showLoader(true);
-            monthData = await fetchMonthly(selectedDate);            
+            clearDoodles();
+            monthData = await fetchMonthly(selectedDate);
             previousMonth = selectedDate.getMonth();
-            showLoader(false);
+            
         }
     }
+    showLoader(false);
 
     let jsons = [];
     for (const json of monthData) {
@@ -71,10 +74,14 @@ export function getFormattedDate(selectedDate, date) {
     return months[selectedDate.getMonth()] + " " + date[2] + ", " + date[0];
 }
 
-export function getHandoffLink(handoff) {
-    return GOOGLE_HANDOFF.replace("query", handoff);
+export function getHandoffLink(query) {
+    return GOOGLE_HANDOFF.replace("query", query);
 }
 
 export function getFormattedDate2(date) {
     return months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+}
+
+export function getRfc3339Date(date) {
+    return date.toISOString().substr(0, 10);
 }

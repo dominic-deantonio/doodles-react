@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import DateChanger from './components/dateChanger';
 import Doodle from './components/doodle';
+import LoginStatusBar from './components/loginStatusBar';
 import Title from './components/title';
 import { getTodayByYear } from './services';
 
@@ -43,31 +44,36 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="container d-flex flex-column align-items-center" >
-        <Title />
-        <DateChanger
-          disableIncrementers={this.state.isFetching}
-          date={this.state.selectedDate}
-          incrementDate={this.incrementDate}
-          showLoader={this.showLoader}
-          getSpecificDate={this.getSpecificDate}
-        />
-        <img
-          src="https://miro.medium.com/max/1400/1*CsJ05WEGfunYMLGfsT2sXA.gif"
-          hidden={!this.state.isFetching}
-          alt=''>
-        </img>
-        <div
-          className='d-flex flex-row flex-wrap justify-content-center'>
-          {this.state.doodles.map((doodleData, i) =>
-            <Doodle
-              {...doodleData}
-              selectedDate={this.state.selectedDate}
-              key={i}
-            />
-          )}
+      <>
+        <LoginStatusBar authState={this.props.authState} />
+        <div className="d-flex flex-column align-items-center" >
+          <Title />
+          <DateChanger
+            disableIncrementers={this.state.isFetching}
+            date={this.state.selectedDate}
+            incrementDate={this.incrementDate}
+            showLoader={this.showLoader}
+            getSpecificDate={this.getSpecificDate}
+          />
+          <img
+            src="https://miro.medium.com/max/1400/1*CsJ05WEGfunYMLGfsT2sXA.gif"
+            hidden={!this.state.isFetching}
+            alt=''>
+          </img>
+          <div
+            className='d-flex flex-row flex-wrap justify-content-center'>
+            {this.state.doodles.map((doodleData, i) =>
+              <Doodle
+                {...doodleData}
+                selectedDate={this.state.selectedDate}
+                key={i}
+                authState={this.props.authState}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      </>
+
     );
   }
 }

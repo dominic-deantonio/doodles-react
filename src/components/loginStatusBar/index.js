@@ -1,17 +1,20 @@
 import React from 'react';
-import { HeartFill } from 'react-bootstrap-icons';
+import { HeartFill, HouseFill } from 'react-bootstrap-icons';
 import LoginButton from '../loginButton';
 import LogoutButton from '../logoutButton';
 
 class LoginStatusBar extends React.Component {
     render() {
-        const { authState } = this.props;
+        const { authState, getFavorites, showFavorites, goToDayView } = this.props;
         return (
-            <div className='shadow sticky-top bg-white'>
-                <div className='container d-flex flex-row justify-content-between align-items-center'>
+            <div className='shadow sticky-top bg-white p-2'>
+                <div className='d-flex flex-row justify-content-between align-items-center'>
                     {authState.isAuthenticated &&
-                        <button className='btn btn-danger'>
-                            <HeartFill />
+                        <button
+                            className={`btn ${showFavorites ? 'btn-primary' : 'btn-danger'}`}
+                            onClick={showFavorites ? goToDayView : getFavorites}>
+                            {!showFavorites && <HeartFill />}
+                            {showFavorites && <HouseFill />}
                         </button>
                     }
                     {authState.isAuthenticated &&

@@ -3,12 +3,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import App from "../../App";
 
 const AuthGate = () => {
-    const { user, isAuthenticated, isLoading } = useAuth0();
+    const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
     const authState = {
         user: user,
         isAuthenticated: isAuthenticated,
-        isLoading: isLoading
+        isLoading: isLoading,
+        getToken: getAccessTokenSilently,
     }
+
     return (
         <App authState={authState} />
         // <div style={{ width: "15rem" }}>

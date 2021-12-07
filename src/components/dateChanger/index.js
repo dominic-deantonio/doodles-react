@@ -1,5 +1,6 @@
 import React from 'react';
-import { getFormattedDate2, getRfc3339Date } from '../../services';
+import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
+import { getFormattedDate2, getRfc3339Date } from '../../services/doodleApi';
 
 class DateChanger extends React.Component {
     state = {
@@ -19,21 +20,29 @@ class DateChanger extends React.Component {
             <>
                 {!this.state.shouldShowTextField &&
                     <div className='d-flex flex-row align-items-center m-1'>
+
                         <button
                             disabled={disableIncrementers}
-                            className='btn btn-primary rounded-circle'
+                            className='btn btn-link'
                             onClick={() => incrementDate(-1)}>
-                            &lt;
+                            <div className="row align-self-center">
+                                <ArrowLeft />
+                            </div>
                         </button>
                         <div
                             onMouseEnter={() => this.showTextField(true)}
                             className='m-2'>{getFormattedDate2(date)}</div>
                         <button
                             disabled={disableIncrementers}
-                            className='btn btn-primary rounded-circle'
+                            className='btn btn-link'
                             onClick={() => incrementDate(1)}>
-                            &gt;
+                            <div className="row align-self-center">
+                                <ArrowRight />
+                            </div>
+
                         </button>
+
+
                     </div>
                 }
                 {this.state.shouldShowTextField &&

@@ -38,7 +38,8 @@ class App extends React.Component {
       await this.waitFor(200); // wait for the login to be complete, then fetch the favorites
       console.log('Waiting for auth...');
     }
-    await this.setFavorites();
+    if (this.props.authState.isAuthenticated)
+      await this.setFavorites();
     this.setState({
       doodles: await getTodayByYear(this.state, true, this.showLoader, this.clearDoodles),
     });

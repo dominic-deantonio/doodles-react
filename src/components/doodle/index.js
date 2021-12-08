@@ -31,6 +31,7 @@ class Doodle extends React.Component {
 
     render() {
         const { authState, doodle } = this.props;
+        console.log(this.state.isFavorite)
         return (
             <div className="card m-2 shadow-lg" style={{ width: "18rem" }}>
                 <img className="card-img-top" src={doodle.url} alt="Card cap" />

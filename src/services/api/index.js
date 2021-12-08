@@ -30,6 +30,6 @@ export async function fetchFavorites(user) {
     const url = `${DOMAIN}favorites?user=${user}`;
     const response = await axios.get(url);
 
-    console.log(`Fetched favorites (${response.data.length})`);
+    // console.log(`Fetched favorites (${response.data.length})`);
     return response.data;
 }

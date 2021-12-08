@@ -40,7 +40,6 @@ export async function getTodayByYear(state, forceFetch, showLoader, clearDoodles
             console.log(e);
         }
     }
-    // console.log(jsons);
     return jsons;
 }
 
